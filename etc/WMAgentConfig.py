@@ -37,7 +37,8 @@ workqueueInboxDbName = 'workqueue_inbox'
 # example of workloadSummary url
 workloadSummaryDB = "workloadsummary"
 workloadSummaryURL = couchURL
-
+#t0 variable that needs to be imported from some t0 code
+t0override = False
 # List of BossAir plugins that this agent will use.
 bossAirPlugins = ["SimpleCondorPlugin"]
 
@@ -190,6 +191,11 @@ config.JobCreator.GlideInRestriction = {"MinWallTimeSecs": 1 * 3600,  # 1h
                                         "MaxWallTimeSecs": 45 * 3600,  # pilot lifetime is usually 48h
                                         "MinRequestDiskKB": 1 * 1000 * 1000,  # 1GB
                                         "MaxRequestDiskKB": 20 * 1000 * 1000}  # site limit is ~27GB
+# method to be created
+if (t0override = True): 
+   config.JobCreator.allowCreationFailure = True
+else
+   config.JobCreator.allowCreationFailure = False
 config.component_("JobSubmitter")
 config.JobSubmitter.namespace = "WMComponent.JobSubmitter.JobSubmitter"
 config.JobSubmitter.componentDir = config.General.workDir + "/JobSubmitter"
